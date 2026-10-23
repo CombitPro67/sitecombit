@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), 'SITE_');
-const configuredUrl = process.env.SITE_URL || env.SITE_URL || 'https://kombit.pro/';
+const configuredUrl = process.env.SITE_URL || env.SITE_URL || 'https://kombit.ru/';
 let site;
 if (configuredUrl) {
   const url = new URL(configuredUrl);

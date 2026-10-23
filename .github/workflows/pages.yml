@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - name: Build and verify
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://kombit.pro/' }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://kombit.ru/' }}
           SITE_BASE_PATH: ${{ steps.pages.outputs.base_path || '/' }}
           PUBLIC_FORMSPREE_ENDPOINT: ${{ vars.PUBLIC_FORMSPREE_ENDPOINT }}
         run: |
