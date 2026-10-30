@@ -50,7 +50,9 @@ Pages CMS сохраняет форматирование в `src/content/site.j
 
 ## Основной хостинг — GitHub Pages
 
-Репозиторий: [CombitPro67/sitecombit](https://github.com/CombitPro67/sitecombit), ветка публикации: master. Основной адрес: https://kombit.ru/ (домен зарегистрирован в Рег.ру). Публикация рассчитана на публичный репозиторий; его видимость меняет владелец. Адрес https://combitpro67.github.io/sitecombit/ — технический адрес Pages до подключения домена.
+Подготовлен переход с kombit.ru на kombit-pro.ru. DNS-записи, порядок смены Custom domain, HTTPS-перенаправление со старого адреса и перенос почты описаны в [migration-kombit-pro.md](migration-kombit-pro.md). Публикуйте эти изменения при переключении домена и после подключения info@kombit-pro.ru в Яндексе.
+
+Репозиторий: [CombitPro67/sitecombit](https://github.com/CombitPro67/sitecombit), ветка публикации: master. Основной адрес: https://kombit-pro.ru/ (домен зарегистрирован в Рег.ру). Публикация рассчитана на публичный репозиторий; его видимость меняет владелец. Адрес https://combitpro67.github.io/sitecombit/ — технический адрес Pages до подключения домена.
 
 Автопубликация описана в [.github/workflows/pages.yml](.github/workflows/pages.yml). Workflow запускается после push в master и вручную через Actions → Deploy to GitHub Pages → Run workflow. Он устанавливает Node.js 22 и зависимости через npm ci, собирает сайт, проверяет SEO и локальные ресурсы, загружает dist и публикует проверенный артефакт. Изменения из Pages CMS проходят тот же процесс. Папку dist коммитить не нужно; ветка gh-pages не используется.
 
@@ -58,14 +60,14 @@ Pages CMS сохраняет форматирование в `src/content/site.j
 
 1. Перевести CombitPro67/sitecombit в публичный режим. Для публичного репозитория GitHub Pages доступен на GitHub Free; дополнительных платных тарифов для размещения не требуется.
 2. В Settings → Pages → Build and deployment выбрать Source: GitHub Actions.
-3. В Settings → Secrets and variables → Actions → Variables добавить PUBLIC_FORMSPREE_ENDPOINT с endpoint существующей формы. Без него сайт публикуется, но отправка заявок отключена. Это публичный адрес, не секрет. Если в Formspree ограничены домены, разрешить kombit.ru и при необходимости www.kombit.ru.
-4. Подключить kombit.ru по инструкции ниже. SITE_URL можно не задавать: по умолчанию конфигурация и workflow используют https://kombit.ru/. Если repository variable SITE_URL уже существует, установить https://kombit.ru/ или удалить переопределение. Префикс ресурсов workflow получает из actions/configure-pages.
+3. В Settings → Secrets and variables → Actions → Variables добавить PUBLIC_FORMSPREE_ENDPOINT с endpoint существующей формы. Без него сайт публикуется, но отправка заявок отключена. Это публичный адрес, не секрет. Если в Formspree ограничены домены, разрешить kombit-pro.ru и при необходимости www.kombit-pro.ru.
+4. Подключить kombit-pro.ru по инструкции ниже. SITE_URL можно не задавать: по умолчанию конфигурация и workflow используют https://kombit-pro.ru/. Если repository variable SITE_URL уже существует, установить https://kombit-pro.ru/ или удалить переопределение. Префикс ресурсов workflow получает из actions/configure-pages.
 5. Отправить изменения в master. Проверить успешные jobs build и deploy в Actions, затем открыть адрес из Settings → Pages.
 6. Проверить CSS, изображения, файлы, якорное меню и отправку тестовой заявки; убедиться, что в canonical и sitemap указан основной адрес. Включить Enforce HTTPS в Settings → Pages, когда настройка доступна.
 
 ### Переменные сборки и адреса ресурсов
 
-- SITE_URL — полный основной адрес лендинга для canonical, Open Graph, JSON-LD и карты сайта. Основное и стандартное значение — https://kombit.ru/.
+- SITE_URL — полный основной адрес лендинга для canonical, Open Graph, JSON-LD и карты сайта. Основное и стандартное значение — https://kombit-pro.ru/.
 - SITE_BASE_PATH — путь, по которому текущая копия опубликована на хостинге. Для стандартного Pages этого репозитория — /sitecombit/, для собственного домена и Layero — /. В GitHub Actions определяется настройками Pages, отдельная repository variable не нужна.
 - PUBLIC_FORMSPREE_ENDPOINT — endpoint формы.
 
@@ -74,20 +76,20 @@ CMS продолжает хранить адреса вида /images/... и /do
 Проверка Pages-сборки локально в PowerShell (в текущем терминале не должно быть других значений этих переменных):
 
 ~~~powershell
-$env:SITE_URL = 'https://kombit.ru/'
+$env:SITE_URL = 'https://kombit-pro.ru/'
 $env:SITE_BASE_PATH = '/'
 npm run build
 npm run test:seo
 Remove-Item Env:SITE_URL, Env:SITE_BASE_PATH
 ~~~
 
-### Подключение kombit.ru через Рег.ру
+### Подключение kombit-pro.ru через Рег.ру
 
-Пошаговая инструкция для владельца GitHub и человека с доступом к Рег.ру, включая текущую TXT-запись подтверждения: [guide.md](guide.md).
+Пошаговая инструкция перехода, включая текущую TXT-запись подтверждения: [migration-kombit-pro.md](migration-kombit-pro.md). Файл guide.md описывает прежнее подключение kombit.ru.
 
-1. В настройках аккаунта CombitPro67 открыть Pages → Add a domain и добавить kombit.ru. Подтверждение выполняется в настройках аккаунта, а не репозитория. GitHub покажет TXT-запись подтверждения владения: имя вида _github-pages-challenge-CombitPro67 и индивидуальное значение. Скопировать точные имя и значение из GitHub в DNS-зону, дождаться проверки и нажать Verify. TXT-запись после подтверждения сохранить. [Инструкция подтверждения](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
-2. В репозитории открыть Settings → Pages → Custom domain, указать kombit.ru и сохранить. Этот шаг выполнить до переключения A/CNAME-записей сайта.
-3. В Рег.ру открыть домен kombit.ru → DNS-серверы и управление зоной → Изменить и перейти к ресурсным записям. Этот интерфейс используется, если авторитетные DNS — ns1.reg.ru/ns2.reg.ru. Если домен делегирован другим DNS-серверам, записи нужно менять у действующего DNS-провайдера; менять NS для подключения к Pages не требуется.
+1. В настройках организации CombitPro67 открыть Pages → Add a domain и добавить kombit-pro.ru. Подтверждение выполняется в настройках организации, а не репозитория. GitHub покажет TXT-запись подтверждения владения: имя вида _github-pages-challenge-CombitPro67 и индивидуальное значение. Скопировать точные имя и значение из GitHub в DNS-зону и нажать Verify, когда запись станет доступна. Остальные настройки можно готовить параллельно. TXT-запись после подтверждения сохранить. [Инструкция подтверждения](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
+2. В репозитории открыть Settings → Pages → Custom domain, указать kombit-pro.ru и сохранить. Этот шаг выполнить до переключения A/CNAME-записей сайта.
+3. В Рег.ру открыть домен kombit-pro.ru → DNS-серверы и управление зоной → Изменить и перейти к ресурсным записям. Этот интерфейс используется, если авторитетные DNS — ns1.reg.ru/ns2.reg.ru. Если домен делегирован другим DNS-серверам, записи нужно менять у действующего DNS-провайдера; менять NS для подключения к Pages не требуется.
 4. Установить записи ниже. Для @ заменить прежние A-записи сайта на четыре адреса GitHub. Старые AAAA, указывающие на другой хостинг, удалить или заменить адресами IPv6 из инструкции GitHub. Для www заменить конфликтующие A/AAAA/CNAME одной CNAME-записью. Сохранить MX и TXT почты, SPF, DKIM, DMARC и подтверждений владения. Домену не нужна CNAME-запись на @ и не нужен путь /sitecombit/ в DNS.
 
 | Тип | Поддомен / имя | Значение |
@@ -100,10 +102,10 @@ Remove-Item Env:SITE_URL, Env:SITE_BASE_PATH
 
 Значения сверены с [инструкцией GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site). Работа с зоной: [инструкция Рег.ру](https://help.reg.ru/support/dns-servery-i-nastroyka-zony/nastroyka-resursnykh-zapisey-dns/nastroyka-resursnykh-zapisey-v-lichnom-kabinete).
 
-5. Дождаться успешной DNS-проверки в Settings → Pages. Изменения DNS и готовность HTTPS могут занять до 24 часов. Включить Enforce HTTPS, когда сертификат готов. При основном домене kombit.ru GitHub настроит переход с www.kombit.ru на основной домен при корректных DNS-записях обоих имён.
-6. Запустить Actions → Deploy to GitHub Pages → Run workflow для master. Configure Pages передаст базовый путь /, а сборка будет использовать основной адрес https://kombit.ru/. Изменение домена в настройках само по себе не гарантирует пересборку нашего артефакта.
-7. Проверить https://kombit.ru/, https://www.kombit.ru/, https://kombit.ru/robots.txt, https://kombit.ru/sitemap.xml, изображения, PDF/DOCX/XLSX и форму. В canonical, Open Graph и JSON-LD должен быть kombit.ru.
-8. На резервном Layero задать SITE_URL=https://kombit.ru/ и SITE_BASE_PATH=/, затем выполнить новый деплой.
+5. Дождаться успешной DNS-проверки в Settings → Pages. Изменения DNS и готовность HTTPS могут занять до 24 часов. Включить Enforce HTTPS, когда сертификат готов. При основном домене kombit-pro.ru GitHub настроит переход с www.kombit-pro.ru на основной домен при корректных DNS-записях обоих имён.
+6. Запустить Actions → Deploy to GitHub Pages → Run workflow для master. Configure Pages передаст базовый путь /, а сборка будет использовать основной адрес https://kombit-pro.ru/. Изменение домена в настройках само по себе не гарантирует пересборку нашего артефакта.
+7. Проверить https://kombit-pro.ru/, https://www.kombit-pro.ru/, https://kombit-pro.ru/robots.txt, https://kombit-pro.ru/sitemap.xml, изображения, PDF/DOCX/XLSX и форму. В canonical, Open Graph и JSON-LD должен быть kombit-pro.ru.
+8. На резервном Layero задать SITE_URL=https://kombit-pro.ru/ и SITE_BASE_PATH=/, затем выполнить новый деплой.
 
 При публикации через GitHub Actions файл CNAME не требуется: GitHub использует домен из Settings → Pages. Создавать файл CNAME в public для этого workflow не нужно. DNS и настройки GitHub необходимо выполнить отдельно: изменение исходников их не применяет.
 
@@ -111,7 +113,7 @@ Remove-Item Env:SITE_URL, Env:SITE_BASE_PATH
 
 Layero остаётся второстепенной копией из того же репозитория. Команда сборки — npm run build, каталог публикации — dist. Настройте переменные окружения сборки:
 
-- SITE_URL=https://kombit.ru/ — основной адрес на GitHub Pages, а не адрес Layero.
+- SITE_URL=https://kombit-pro.ru/ — основной адрес на GitHub Pages, а не адрес Layero.
 - SITE_BASE_PATH=/ — файлы резервной копии доступны от корня её домена.
 - PUBLIC_FORMSPREE_ENDPOINT — тот же endpoint формы.
 
@@ -121,13 +123,13 @@ Layero остаётся второстепенной копией из того 
 
 ## Поисковая оптимизация и запуск
 
-По умолчанию SITE_URL равен https://kombit.ru/ на обеих площадках. Этот адрес используется в canonical, Open Graph, JSON-LD и карте сайта. Карта сайта содержит только главную страницу лендинга.
+По умолчанию SITE_URL равен https://kombit-pro.ru/ на обеих площадках. Этот адрес используется в canonical, Open Graph, JSON-LD и карте сайта. Карта сайта содержит только главную страницу лендинга.
 
 После запуска основного адреса:
 
 1. Убедиться, что он отвечает 200, работает HTTPS, отсутствует noindex, canonical указывает на основной URL.
-2. Открыть https://kombit.ru/sitemap.xml: единственный адрес в карте должен быть https://kombit.ru/.
-3. Добавить kombit.ru в Яндекс Вебмастер и Google Search Console, подтвердить права доступным для этого адреса способом и отправить sitemap и главную на обход.
+2. Открыть https://kombit-pro.ru/sitemap.xml: единственный адрес в карте должен быть https://kombit-pro.ru/.
+3. Добавить kombit-pro.ru в Яндекс Вебмастер и Google Search Console, подтвердить права доступным для этого адреса способом и отправить sitemap и главную на обход.
 4. Указать основной адрес в карточке компании и официальных профилях.
 
 При адресе с /sitecombit/ файл robots.txt физически находится в /sitecombit/robots.txt. Поисковики читают robots.txt из корня домена; этот файл проекта не управляет всем доменом combitpro67.github.io. Для этого адреса отправляйте карту сайта напрямую через поисковые кабинеты. На собственном домене файл будет доступен в корне как обычно.
