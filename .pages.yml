@@ -46,6 +46,16 @@ content:
           - { name: address, label: Адрес, type: text, required: true }
           - { name: headerCta, label: Подпись под телефоном, type: string, required: true }
 
+      - name: mailNotice
+        label: Объявление о смене почты
+        type: object
+        fields:
+          - { name: enabled, label: Показывать объявление, type: boolean, default: true }
+          - { name: eyebrow, label: Метка объявления, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: description, label: Текст объявления, component: rich_text, required: true }
+          - { name: linkLabel, label: Подпись ссылки на новую почту, type: string, required: true }
+
       - name: hero
         label: Первый экран
         type: object

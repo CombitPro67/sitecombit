@@ -23,6 +23,23 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
     <Header />
 
     <main>
+      {site.mailNotice?.enabled && (
+        <aside class="mail-notice" aria-labelledby="mail-notice-title">
+          <div class="container mail-notice-inner">
+            <svg class="mail-notice-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+            <div class="mail-notice-copy">
+              <p class="mail-notice-eyebrow">{site.mailNotice.eyebrow}</p>
+              <h2 class="mail-notice-title" id="mail-notice-title">{site.mailNotice.title}</h2>
+              <RichText class="mail-notice-description" content={site.mailNotice.description} />
+            </div>
+            <a class="mail-notice-link" href={`mailto:${site.contact.email}`}>
+              <span>{site.mailNotice.linkLabel}</span>
+              <strong>{site.contact.email}</strong>
+            </a>
+          </div>
+        </aside>
+      )}
+
       <section class="hero" aria-labelledby="hero-title" style={`--hero-image: url("${site.hero.image}")`}>
         <div class="container hero-inner">
           <div class="hero-copy">
