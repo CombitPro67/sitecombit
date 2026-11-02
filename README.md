@@ -50,7 +50,7 @@ Pages CMS сохраняет форматирование в `src/content/site.j
 
 ## Основной хостинг — GitHub Pages
 
-Подготовлен переход с kombit.ru на kombit-pro.ru. DNS-записи, порядок смены Custom domain, HTTPS-перенаправление со старого адреса и перенос почты описаны в [migration-kombit-pro.md](migration-kombit-pro.md). Публикуйте эти изменения при переключении домена и после подключения info@kombit-pro.ru в Яндексе.
+Сайт полностью переезжает с kombit.ru на kombit-pro.ru без перенаправления со старого домена. Домен kombit.ru сохраняется для почты как алиас Яндекса. DNS-записи, смена Custom domain и отключение только старого сайта описаны в [migration-kombit-pro.md](migration-kombit-pro.md). При публикации контакт info@kombit-pro.ru должен быть подключён в Яндексе.
 
 Репозиторий: [CombitPro67/sitecombit](https://github.com/CombitPro67/sitecombit), ветка публикации: master. Основной адрес: https://kombit-pro.ru/ (домен зарегистрирован в Рег.ру). Публикация рассчитана на публичный репозиторий; его видимость меняет владелец. Адрес https://combitpro67.github.io/sitecombit/ — технический адрес Pages до подключения домена.
 
